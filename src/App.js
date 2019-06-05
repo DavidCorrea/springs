@@ -113,8 +113,8 @@ function App() {
 
   return (
     <div style={{ position: 'relative', height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <div style={{ position: 'absolute', height: '180px', width: '700px', backgroundColor: 'rgba(0, 0, 0, 0.1)', color: '#525252', top: '30px', left: '30px', zIndex: '9999', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', lineHeight: 2 }}>
-        <ul>
+      <div style={{ position: 'absolute', height: '240px', width: '450px', backgroundColor: 'rgba(0, 0, 0, 0.1)', color: '#525252', top: '30px', left: '30px', zIndex: '9999', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', lineHeight: 2 }}>
+        <ul style={{ lineHeight: '35px' }}>
           <li>
             Generate Squares with Q, W, A & S
           </li>
@@ -125,9 +125,7 @@ function App() {
             You can also say keywords like 'up', 'down', 'left', 'right' or 'spin'
           </li>
           <li>
-            <b>
               In case you accepted Microphone usage, please reload the page
-            </b>
           </li>
         </ul>
       </div>
