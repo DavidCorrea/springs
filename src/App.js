@@ -70,21 +70,64 @@ function App() {
     83: squareControl(bottomRightSquareSet)
   };
 
+  const voiceMappings = {
+    'up':    cameraControl({ x:  45  }),
+    'down':  cameraControl({ x: -45  }),
+    'left':  cameraControl({ y: -45  }),
+    'right': cameraControl({ y:  45  }),
+    'spin':  cameraControl({ z:  90  })
+  };
+
   document.addEventListener("keydown", (event) => {
     if(keyMappings[event.keyCode]) {
       keyMappings[event.keyCode].do();
     }
   });
 
+  document.body.onload = () => {
+    const recognition = new window.webkitSpeechRecognition();
+    recognition.continuos = false;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
+    recognition.maxAlternatives = 1;
+  
+    recognition.onend = () => { 
+      recognition.start() 
+    };
+  
+    recognition.onresult = (event) => {
+      const whatISaid = event.results[event.resultIndex][0].transcript;
+
+      const wordsISaid = whatISaid.split(' ');
+
+      wordsISaid.forEach((wordISaid) => {
+        if(voiceMappings[wordISaid]) {
+          console.log(`Recognised "${wordISaid}" in "${whatISaid}"`);
+          voiceMappings[wordISaid].do();
+        }
+      });
+    };
+  
+    recognition.start();
+  };
+
   return (
     <div style={{ position: 'relative', height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <div style={{ position: 'absolute', height: '100px', width: '450px', backgroundColor: 'rgba(0, 0, 0, 0.1)', color: '#525252', top: '30px', left: '30px', zIndex: '9999', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', lineHeight: 2 }}>
+      <div style={{ position: 'absolute', height: '180px', width: '700px', backgroundColor: 'rgba(0, 0, 0, 0.1)', color: '#525252', top: '30px', left: '30px', zIndex: '9999', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', lineHeight: 2 }}>
         <ul>
           <li>
             Generate Squares with Q, W, A & S
           </li>
           <li>
             Rotate the Camera with Space, ↑, ↓, ← & →
+          </li>
+          <li>
+            You can also say keywords like 'up', 'down', 'left', 'right' or 'spin'
+          </li>
+          <li>
+            <b>
+              In case you accepted Microphone usage, please reload the page
+            </b>
           </li>
         </ul>
       </div>
